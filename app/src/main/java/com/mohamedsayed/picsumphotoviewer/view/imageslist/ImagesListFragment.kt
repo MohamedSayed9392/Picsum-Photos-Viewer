@@ -8,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.mohamedsayed.picsumphotoviewer.R
 import com.mohamedsayed.picsumphotoviewer.databinding.LayoutRecyclerBinding
 import com.mohamedsayed.picsumphotoviewer.view.MainActivity
 import com.mohamedsayed.picsumphotoviewer.viewmodel.ImagesListVM
@@ -53,7 +51,10 @@ class ImagesListFragment : Fragment() {
 
         binding.recyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        binding.recyclerView.adapter = imagesListAdapter
+        binding.recyclerView.adapter = imagesListAdapter.withLoadStateHeaderAndFooter(
+            header = ImagesLoadStateAdapter { imagesListAdapter.retry() },
+            footer = ImagesLoadStateAdapter { imagesListAdapter.retry() }
+        )
         binding.recyclerView.visibility = View.VISIBLE
 
         lifecycleScope.launch {
