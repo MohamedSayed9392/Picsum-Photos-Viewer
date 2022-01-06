@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PicsumPhotoViewer">
         <activity
+            android:name=".view.imageviewer.ImageViewerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:label="@string/title_activity_image_viewer"
+            android:theme="@style/Theme.PicsumPhotoViewer.Fullscreen" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
