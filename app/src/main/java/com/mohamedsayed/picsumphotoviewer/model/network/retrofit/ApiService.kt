@@ -8,5 +8,5 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET(Q.API_LIST_IMAGES)
-    fun getImagesList(@Query("page") page:Int,@Query("limit") limit:Int): LiveData<ApiResponse<List<PicsumImage>>>
+    suspend fun getImagesList(@Query("page") page:Int,@Query("limit") limit:Int): List<PicsumImage>?
 }

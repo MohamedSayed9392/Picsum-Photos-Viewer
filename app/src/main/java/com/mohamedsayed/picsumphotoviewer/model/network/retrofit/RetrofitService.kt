@@ -80,8 +80,8 @@ object RetrofitService {
         .baseUrl(Q.BASE_API)
         .client(getOkHttpClient())
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(LiveDataCallAdapterFactory())
         .build()
+
 
     val apiService: ApiService
         get() = retrofit.create(ApiService::class.java)

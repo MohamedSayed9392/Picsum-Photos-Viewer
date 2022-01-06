@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -18,9 +20,8 @@ import com.mohamedsayed.picsumphotoviewer.model.objects.PicsumImage
 
 class ImagesListAdapter(
     private val context: Context,
-    private val list: List<PicsumImage>,
-    private val onItemClick: (PicsumImage) -> Unit,
-) : RecyclerView.Adapter<ImagesListAdapter.ImagesListAdapterHolder>() {
+    private val onItemClick: (PicsumImage?) -> Unit,
+) : PagingDataAdapter<PicsumImage,ImagesListAdapter.ImagesListAdapterHolder>(PicsumImageComparator) {
 
     inner class ImagesListAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ImagesListItemBinding.bind(itemView)
@@ -36,22 +37,18 @@ class ImagesListAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
     override fun onBindViewHolder(holder: ImagesListAdapterHolder, position: Int) {
 
 
-        val item = list[position]
+        val item = getItem(position)
 
-        holder.imageAuthorTV.text = item.author ?: ""
+        holder.imageAuthorTV.text = item?.author ?: ""
 
         Glide.with(context).applyDefaultRequestOptions(
             RequestOptions()
                 .error(R.drawable.ic_refresh)
         )
-            .load(item.downloadUrl)
+            .load(item?.downloadUrl)
             .fitCenter()
             .addListener(object : RequestListener<Drawable?> {
                 override fun onLoadFailed(
@@ -86,5 +83,15 @@ class ImagesListAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return position
+    }
+
+    object PicsumImageComparator : DiffUtil.ItemCallback<PicsumImage>() {
+        override fun areItemsTheSame(oldItem: PicsumImage, newItem: PicsumImage): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: PicsumImage, newItem: PicsumImage): Boolean {
+            return oldItem == newItem
+        }
     }
 }

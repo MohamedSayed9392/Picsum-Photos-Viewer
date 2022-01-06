@@ -1,14 +1,16 @@
 package com.mohamedsayed.picsumphotoviewer.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.mohamedsayed.picsumphotoviewer.model.network.retrofit.ApiResponse
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import com.mohamedsayed.picsumphotoviewer.model.data.ImagesDataSource
 import com.mohamedsayed.picsumphotoviewer.model.network.retrofit.ApiService
-import com.mohamedsayed.picsumphotoviewer.model.objects.PicsumImage
 
 class ImagesListVM (private val apiService: ApiService) : ViewModel() {
 
-    fun getImagesList(page:Int,limit:Int = 10): LiveData<ApiResponse<List<PicsumImage>>> {
-        return apiService.getImagesList(page,limit)
-    }
+    val imagesList = Pager(PagingConfig(pageSize = 10)) {
+        ImagesDataSource(apiService)
+    }.flow.cachedIn(viewModelScope)
 }
