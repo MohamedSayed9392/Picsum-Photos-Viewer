@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mohamedsayed.picsumphotoviewer.databinding.LayoutRecyclerBinding
+import com.mohamedsayed.picsumphotoviewer.model.objects.AdObject
+import com.mohamedsayed.picsumphotoviewer.model.objects.PicsumImage
 import com.mohamedsayed.picsumphotoviewer.view.MainActivity
 import com.mohamedsayed.picsumphotoviewer.viewmodel.ImagesListVM
 import kotlinx.coroutines.flow.collectLatest
@@ -45,12 +48,17 @@ class ImagesListFragment : Fragment() {
 
         imagesListAdapter = ImagesListAdapter(
             mContext!!,
-        ) { item ->
-            Log.d(TAG, "${item?.url}")
-        }
+            fun(item: Any?) {
+                if(item is PicsumImage?) {
+                    Log.d(TAG, "${item?.url}")
+                }else if(item is AdObject?){
+                    Log.d(TAG, "${item?.id}")
+                }
+            },
+        )
 
         binding.recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            GridLayoutManager(context,2)
         binding.recyclerView.adapter = imagesListAdapter.withLoadStateHeaderAndFooter(
             header = ImagesLoadStateAdapter { imagesListAdapter.retry() },
             footer = ImagesLoadStateAdapter { imagesListAdapter.retry() }
