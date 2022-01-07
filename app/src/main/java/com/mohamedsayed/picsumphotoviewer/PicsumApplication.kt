@@ -2,6 +2,7 @@ package com.mohamedsayed.picsumphotoviewer
 
 import android.app.Application
 import com.mohamedsayed.picsumphotoviewer.koin.appModule
+import com.mohamedsayed.picsumphotoviewer.koin.dbModule
 import com.mohamedsayed.picsumphotoviewer.koin.viewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -28,7 +29,7 @@ class PicsumApplication : Application() {
     }
 
     private fun getModules(): List<Module> {
-        return listOf(viewModel, appModule)
+        return listOf(viewModel, appModule, dbModule)
     }
 
 }

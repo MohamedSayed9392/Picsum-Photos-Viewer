@@ -24,6 +24,7 @@ object RetrofitService {
             .connectTimeout(25, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
+            .cache(null)
             .build()
 
         return okHttpClient!!

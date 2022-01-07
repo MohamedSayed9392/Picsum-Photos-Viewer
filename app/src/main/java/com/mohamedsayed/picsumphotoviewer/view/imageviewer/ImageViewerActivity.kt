@@ -75,12 +75,7 @@ class ImageViewerActivity : Activity() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     binding.imageZI.setImageBitmap(resource)
                 }
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    // this is called when imageView is cleared on lifecycle call or for
-                    // some other reason.
-                    // if you are referencing the bitmap somewhere else too other than this imageView
-                    // clear it here as you can no longer have the bitmap
-                }
+                override fun onLoadCleared(placeholder: Drawable?) {}
             })
     }
 }
