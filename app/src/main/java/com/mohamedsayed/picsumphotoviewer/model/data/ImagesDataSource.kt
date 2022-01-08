@@ -43,7 +43,7 @@ class ImagesDataSource(
             //adding ads to the list every 5 photos
             var adPlaceHolderIndex = 5
             while (dataList.size >= adPlaceHolderIndex) {
-                dataList.add(adPlaceHolderIndex, FakeData.getFakeAd())
+                dataList.add(adPlaceHolderIndex, FakeData.getFakeAd(100))
                 adPlaceHolderIndex += 6
             }
 
